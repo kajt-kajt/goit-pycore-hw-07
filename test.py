@@ -7,7 +7,7 @@ from unittest import TestCase
 from unittest.mock import patch
 import io
 import sys
-from src.main import main
+from main import main
 
 
 class TestBot(TestCase):
@@ -221,4 +221,3 @@ class TestBot(TestCase):
 
 if __name__ == '__main__':
     unittest_main()
-    
