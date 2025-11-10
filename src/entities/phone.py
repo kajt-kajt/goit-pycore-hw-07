@@ -1,5 +1,5 @@
 from re import fullmatch
-from src.entities.field import Field
+from src.entities import Field
 from src import CustomValueError
 
 class Phone(Field):

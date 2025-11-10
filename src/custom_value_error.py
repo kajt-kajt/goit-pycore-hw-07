@@ -1,4 +1,4 @@
 class CustomValueError(ValueError):
     """
-    Custom value error for better user experiance
+    Custom ValueError for better user experiance
     """
