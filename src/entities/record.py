@@ -18,7 +18,8 @@ class Record:
         """
         Add phone number to list for this record
         """
-        self.phones.append(Phone(phone))
+        if not self.find_phone(phone):
+            self.phones.append(Phone(phone))
 
     def remove_phone(self, phone: str):
         """
@@ -34,7 +35,7 @@ class Record:
             if str(phone_record) == old_phone:
                 phone_record.update(new_phone)
 
-    def find_phone(self, phone: str) -> Phone:
+    def find_phone(self, phone: str) -> Phone | None:
         """
         Find phone number in the list
         """

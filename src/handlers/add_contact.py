@@ -10,5 +10,8 @@ def add_contact(args: list[str], contacts: AddressBook) -> str:
     """
     name, phone = args
     ## if contact already exists, adding one more phone for user
-    contacts[name] = phone
+    if name in contacts:
+        contacts[name].add_phone(phone)
+    else:
+        contacts[name] = phone
     return "Contact added."

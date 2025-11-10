@@ -4,7 +4,7 @@ from src.entities import AddressBook
 @input_error
 def change_contact(args: list[str], contacts: AddressBook) -> str:
     """
-    Updates existing contact with new phone value.
+    Rewrites record for existing name.
     Returns an error message if contact with given name does not exist.
     "args" should contain 2 values.
     """
@@ -13,4 +13,3 @@ def change_contact(args: list[str], contacts: AddressBook) -> str:
         return f"ERROR: contact '{name}' does not exist!"
     contacts[name] = phone
     return "Contact updated."
-    

@@ -79,6 +79,34 @@ class TestBot(TestCase):
             mock_input.assert_called_with("Enter a command: ")
 
 
+    @patch('builtins.input', side_effect=['add Peter 0123456789',
+                                          'add Peter 0123456789',
+                                          'add Peter 1234567890',
+                                          'phone Peter',
+                                          'change Peter 2345678901',
+                                          'phone Peter',
+                                          'exit'])
+    def test_add_contact_double_phone(self, mock_input):
+        """
+        Add new contact, add one more phone and try to get it back with phone
+        """
+        captured_output = io.StringIO()
+        sys.stdout = captured_output
+        main() ### running main script
+        sys.stdout = sys.__stdout__
+        ### check all the output
+        self.assertEqual(captured_output.getvalue(),
+                         "Welcome to the assistant bot!\n"
+                         + "Contact added.\n"*3
+                         + "0123456789; 1234567890\n"
+                         + "Contact updated.\n"
+                         + "2345678901\n"
+                         + "Good bye!\n")
+        ### check input prompts
+        for _ in range(7):
+            mock_input.assert_called_with("Enter a command: ")
+
+
     @patch('builtins.input', side_effect=['hello',
                                           'HELLO', 
                                           'Hello', 
@@ -105,7 +133,8 @@ class TestBot(TestCase):
 
     @patch('builtins.input', side_effect=['add', 
                                           'add Peter', 
-                                          'add Peter 123456787 fdfdfd', 
+                                          'add Peter 123456787 fdfdfd',
+                                          'add Peter 12345678', 
                                           'all', 
                                           'exit'])
     def test_add_contact_misc(self, mock_input):
@@ -120,6 +149,7 @@ class TestBot(TestCase):
         self.assertEqual(captured_output.getvalue(),
                          "Welcome to the assistant bot!\n"
                          + "Wrong argument(-s) provided. Try again.\n"*3
+                         + "Phone number must be strictly 10 digits, got '12345678' instead.\n"
                          + "\n"
                          + "Good bye!\n")
         ### check input prompts
@@ -197,7 +227,11 @@ class TestBot(TestCase):
 
     @patch('builtins.input', side_effect=['change',
                                           'change Peter',
-                                          'change Peter 9876543210', 
+                                          'change Peter 987654321',
+                                          'change Peter 9876543210',
+                                          'all',
+                                          'add Peter 0123456789',
+                                          'change Peter 23456789',
                                           'all',
                                           'close'])
     def test_change_misc(self, mock_input):
@@ -212,15 +246,19 @@ class TestBot(TestCase):
         self.assertEqual(captured_output.getvalue(),
                          "Welcome to the assistant bot!\n"
                          + "Wrong argument(-s) provided. Try again.\n"*2
-                         + "ERROR: contact 'Peter' does not exist!\n"
+                         + "ERROR: contact 'Peter' does not exist!\n"*2
                          + "\n"
+                         + "Contact added.\n"
+                         + "Phone number must be strictly 10 digits, got '23456789' instead.\n"
+                         + "Peter: 0123456789\n"
                          + "Good bye!\n")
         ### check input prompts
-        for _ in range(5):
+        for _ in range(9):
             mock_input.assert_called_with("Enter a command: ")    
 
 ##### add test for wrong format of phone number to add_contact and change_contact
 ##### add test for adding second number for user with add_contact
+##### try to add duplicate phone number with add or change
 
 
 if __name__ == '__main__':

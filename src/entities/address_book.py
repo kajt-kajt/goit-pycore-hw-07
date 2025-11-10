@@ -12,11 +12,13 @@ class AddressBook(UserDict):
         If item to add is not of class Record - let's convert it to Record
         """
         if isinstance(item, Record):
-            value = item
+            # value is Record, some internal call
+            return super().__setitem__(key, item)
         else:
+            # new name
             value = Record(key)
             value.add_phone(item)
-        return super().__setitem__(key, value)
+            return super().__setitem__(key, value)
 
     def add_record(self, record: Record):
         """
