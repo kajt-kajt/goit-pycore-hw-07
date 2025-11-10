@@ -4,13 +4,14 @@ Entry point
 
 from collections import defaultdict
 from src.handlers import *
+from src.entities import AddressBook
 
 def main():
     """
     Main loop for bot
     """
 
-    contacts = {}
+    contacts = AddressBook()
 
     # command handlers
 
@@ -20,14 +21,15 @@ def main():
         return inner
 
     # all handlers should take 2 arguments - args list and contacts dictionary
-    handlers = defaultdict(default_handler)
-    handlers["hello"] = lambda x,y: "How can I help you?"
-    handlers["close"] = lambda x,y: "Good bye!"
-    handlers["exit"] = lambda x,y: "Good bye!"
-    handlers["add"] = add_contact
-    handlers["change"] = change_contact
-    handlers["phone"] = show_phone
-    handlers["all"] = show_all
+    handlers = defaultdict(default_handler, {
+        "hello": lambda x,y: "How can I help you?",
+        "close": lambda x,y: "Good bye!",
+        "exit": lambda x,y: "Good bye!",
+        "add": add_contact,
+        "change": change_contact,
+        "phone": show_phone,
+        "all": show_all
+    })
 
     print("Welcome to the assistant bot!")
 

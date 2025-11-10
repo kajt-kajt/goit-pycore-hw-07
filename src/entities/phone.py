@@ -1,5 +1,6 @@
 from re import fullmatch
-from entities.field import Field
+from src.entities.field import Field
+from src import CustomValueError
 
 class Phone(Field):
     """
@@ -13,5 +14,5 @@ class Phone(Field):
         value_str = super().validate_value(value)
         if not fullmatch(r"\d{10}",value_str):
             error_msg = f"Phone number must be strictly 10 digits, got \"{value_str}\" instead."
-            raise ValueError(error_msg)
+            raise CustomValueError(error_msg)
         return value_str

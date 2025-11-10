@@ -1,5 +1,6 @@
 from functools import wraps
 from typing import Callable
+from src import CustomValueError
 
 # handler decorator
 def input_error(func: Callable) -> Callable:
@@ -10,6 +11,8 @@ def input_error(func: Callable) -> Callable:
     def inner(*args, **kwargs):
         try:
             return func(*args, **kwargs)
+        except CustomValueError as e:
+            return str(e)
         except (ValueError, IndexError):
             return "Wrong argument(-s) provided. Try again."
         except KeyError:

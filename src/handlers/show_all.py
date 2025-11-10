@@ -1,8 +1,8 @@
-def show_all(_, contacts: dict[str, str]) -> str:
+from src.entities import AddressBook
+
+def show_all(_, contacts: AddressBook) -> str:
     """
     Outputs all the contents of in-memory database of contacts.
     """
-    result = []
-    for name, phone in contacts.items():
-        result.append(f"{name}: {phone}")
+    result = [f"{contacts[name]}" for name in contacts]
     return "\n".join(result)

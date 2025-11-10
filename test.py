@@ -35,7 +35,7 @@ class TestBot(TestCase):
             mock_input.assert_called_with("Enter a command: ")
 
 
-    @patch('builtins.input', side_effect=['add Peter 123456789',
+    @patch('builtins.input', side_effect=['add Peter 0123456789',
                                           'all',
                                           'exit'])
     def test_add_contact_all(self, mock_input):
@@ -50,14 +50,14 @@ class TestBot(TestCase):
         self.assertEqual(captured_output.getvalue(),
                          "Welcome to the assistant bot!\n"
                          + "Contact added.\n"
-                         + "Peter: 123456789\n"
+                         + "Peter: 0123456789\n"
                          + "Good bye!\n")
         ### check input prompts
         for _ in range(3):
             mock_input.assert_called_with("Enter a command: ")
 
 
-    @patch('builtins.input', side_effect=['add Peter 123456789',
+    @patch('builtins.input', side_effect=['add Peter 0123456789',
                                           'phone Peter',
                                           'exit'])
     def test_add_contact_phone(self, mock_input):
@@ -72,7 +72,7 @@ class TestBot(TestCase):
         self.assertEqual(captured_output.getvalue(),
                          "Welcome to the assistant bot!\n"
                          + "Contact added.\n"
-                         + "123456789\n"
+                         + "0123456789\n"
                          + "Good bye!\n")
         ### check input prompts
         for _ in range(3):
@@ -171,8 +171,8 @@ class TestBot(TestCase):
             mock_input.assert_called_with("Enter a command: ")
 
 
-    @patch('builtins.input', side_effect=['add Peter 12345678', 
-                                          'change Peter 87654321', 
+    @patch('builtins.input', side_effect=['add Peter 0123456789',
+                                          'change Peter 9876543210', 
                                           'phone Peter', 
                                           'exit'])
     def test_change(self, mock_input):
@@ -188,7 +188,7 @@ class TestBot(TestCase):
                          "Welcome to the assistant bot!\n"
                          + "Contact added.\n"
                          + "Contact updated.\n"
-                         + "87654321\n"
+                         + "9876543210\n"
                          + "Good bye!\n")
         ### check input prompts
         for _ in range(4):
@@ -197,7 +197,7 @@ class TestBot(TestCase):
 
     @patch('builtins.input', side_effect=['change',
                                           'change Peter',
-                                          'change Peter 87654321', 
+                                          'change Peter 9876543210', 
                                           'all',
                                           'close'])
     def test_change_misc(self, mock_input):
@@ -218,6 +218,10 @@ class TestBot(TestCase):
         ### check input prompts
         for _ in range(5):
             mock_input.assert_called_with("Enter a command: ")    
+
+##### add test for wrong format of phone number to add_contact and change_contact
+##### add test for adding second number for user with add_contact
+
 
 if __name__ == '__main__':
     unittest_main()

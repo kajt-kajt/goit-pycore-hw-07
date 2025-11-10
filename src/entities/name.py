@@ -1,4 +1,4 @@
-from entities.field import Field
+from src.entities.field import Field
 
 class Name(Field):
     """

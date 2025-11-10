@@ -9,7 +9,7 @@ class Record:
         self.phones = []
 
     def __str__(self):
-        return f"Contact name: {self.name}, phones: {'; '.join(str(p) for p in self.phones)}"
+        return f"{self.name}: {'; '.join(str(p) for p in self.phones)}"
 
     def __repr__(self):
         return f"Record({str(self)})"
@@ -44,3 +44,9 @@ class Record:
                 result = phone_record
                 break
         return result
+
+    def get_phones(self) -> str:
+        """
+        Output all phone numbers in record
+        """
+        return '; '.join(str(p) for p in self.phones)

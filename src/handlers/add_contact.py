@@ -1,15 +1,14 @@
 from src.handlers.input_error import input_error
+from src.entities import AddressBook
 
 @input_error
-def add_contact(args: list[str], contacts: dict[str, str]) -> str:
+def add_contact(args: list[str], contacts: AddressBook) -> str:
     """
-    Adds new entry to contacts dictionary. 
-    Returns a warning if contact with such name already exists, but anyway rewrites it.
+    Adds new entry to contacts book object. 
+    If contact with such name already exists, adds one more phone for that user.
     "args" should contain 2 values.
     """
-    warning = ""
     name, phone = args
-    if name in contacts:
-        warning = f"WARNING: rewriting existing contact '{name}'=>'{contacts[name]}'!\n"
+    ## if contact already exists, adding one more phone for user
     contacts[name] = phone
-    return warning + "Contact added."
+    return "Contact added."
