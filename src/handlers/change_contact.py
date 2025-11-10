@@ -8,8 +8,8 @@ def change_contact(args: list[str], contacts: AddressBook) -> str:
     Returns an error message if contact with given name does not exist.
     "args" should contain 2 values.
     """
-    name, phone = args
+    name, old_phone, new_phone = args
     if name not in contacts:
         return f"ERROR: contact '{name}' does not exist!"
-    contacts[name] = phone
-    return "Contact updated."
+    result = contacts[name].edit_phone(old_phone, new_phone)
+    return "Contact updated." if result else "Nothing to change."
