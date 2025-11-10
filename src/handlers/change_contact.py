@@ -1,0 +1,16 @@
+from src.handlers.input_error import input_error
+
+@input_error
+def change_contact(args: list[str], contacts: dict[str,str]) -> str:
+    """
+    Updates existing contact with new phone value.
+    Returns an error message if contact with given name does not exist.
+    "args" should contain 2 values.
+    """
+    name, phone = args
+    if name not in contacts:
+        return f"ERROR: contact '{name}' does not exist!"
+    else:
+        contacts[name] = phone
+        return "Contact updated."
+    
